@@ -5,7 +5,7 @@ development. It records behavior that the Adobe documentation shows
 incorrectly, does not show, or that fails without an error message.
 
 Each entry comes from the development of a production plugin
-([Scout](https://trevorohare.com), an AI-assisted podcast editing panel, in
+([Scout](https://www.trevorohare.com/dev), an AI-assisted podcast editing panel, in
 development). Each entry has one of two sources:
 
 - A live test in Premiere Pro 26.2.x on Windows.
@@ -78,7 +78,7 @@ time.
 - [Sequence Batch Exporter](https://github.com/tro2789/SequenceBatchExporter):
   a free CEP panel. It sends multiple sequences with multiple export
   presets to Adobe Media Encoder in one operation.
-- More at [trevorohare.com](https://trevorohare.com).
+- More at [trevorohare.com/dev](https://www.trevorohare.com/dev).
 
 ## License
 
