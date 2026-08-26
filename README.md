@@ -49,6 +49,9 @@ time.
 
 - **[CEP manifest problems](cep/manifest-gotchas.md)**: silent rejections
   of version ranges, lifecycle events, and panel geometry
+- **[CEP panel Node.js access](cep/panel-node.md)**: `cep_node.require`,
+  the `file:///` URL that `getSystemPath` returns, double-firing failed
+  spawns, and watch-folder completion detection for AME renders
 - **[The QE DOM](cep/qe-dom.md)**: the undocumented API that is necessary
   for razor operations, and its timecode format
 
