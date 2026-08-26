@@ -54,6 +54,11 @@ time.
   spawns, and watch-folder completion detection for AME renders
 - **[The QE DOM](cep/qe-dom.md)**: the undocumented API that is necessary
   for razor operations, and its timecode format
+- **[Render a sequence with app.encoder](cep/encoder.md)**: the working
+  `encodeSequence` call order, `workAreaType` values, `.epr` preset
+  discovery, and completion detection
+- **[Sequence markers in ExtendScript](cep/extendscript-markers.md)**:
+  linked-list iteration, Time objects, and the point-marker trap
 
 ### Distribution (Windows)
 
@@ -81,6 +86,10 @@ time.
 - [Sequence Batch Exporter](https://github.com/tro2789/SequenceBatchExporter):
   a free CEP panel. It sends multiple sequences with multiple export
   presets to Adobe Media Encoder in one operation.
+- [Spec Check](https://github.com/tro2789/SpecCheck): a free CEP panel.
+  It measures a mix against a delivery spec (ACX/Audible, Apple
+  Podcasts, Spotify, EBU R128, YouTube, custom) and shows a pass/fail
+  scoreboard.
 - More at [trevorohare.com/dev](https://www.trevorohare.com/dev).
 
 ## License
