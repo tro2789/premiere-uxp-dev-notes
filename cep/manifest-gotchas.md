@@ -38,3 +38,26 @@ When a CEP extension does not appear:
 An unsigned extension also needs `PlayerDebugMode=1` (string) under
 `HKCU\Software\Adobe\CSXS.<ver>`. A signed package does not need this key.
 See [distribution/zxp-signing.md](../distribution/zxp-signing.md).
+
+## Media Encoder is not a CEP host — an AME HostList entry crashes AME
+
+Verified 2026-08-26, Adobe Media Encoder 2026 (Windows 11), during Spec
+Check development.
+
+Media Encoder looks like a CEP host: it ships `PlugPlug.dll` and
+`csxsmanager.dll` and has a Window > Extensions menu. It is not one. The
+official CEP cookbook host table (CEP 11 and CEP 12) lists twelve
+applications — including Prelude, Bridge, and Rush — and Media Encoder is
+in neither list.
+
+Adding `<Host Name="AME" Version="[22.0,99.9]"/>` to a panel's HostList
+made the panel appear in AME's Extensions menu, and opening it crashed
+AME with an access violation. The minidump shows the fault in
+`dvaworkspace.dll` (Adobe's panel-docking framework) while creating the
+panel view; CEP's CEF browser never started, so no panel code ran. The
+crash is in the host, before your extension executes anything.
+
+Community reports show the other failure mode on AME 24 and 25.5: the
+extension never appears in the menu at all. Either way, do not declare
+AME. If you need QC or automation on AME renders, run the panel in
+Premiere and watch AME's output folder from there.
