@@ -59,6 +59,8 @@ time.
   discovery, and completion detection
 - **[Sequence markers in ExtendScript](cep/extendscript-markers.md)**:
   linked-list iteration, Time objects, and the point-marker trap
+- **[Track mute](cep/track-mute.md)**: `isMuted()` and `setMute()` on
+  `audioTracks`, verified behavior, and the A/B toggle pattern
 
 ### Distribution (Windows)
 
@@ -90,6 +92,9 @@ time.
   It measures a mix against a delivery spec (ACX/Audible, Apple
   Podcasts, Spotify, EBU R128, YouTube, custom) and shows a pass/fail
   scoreboard.
+- [A/B Audio Toggle](https://github.com/tro2789/ABAudioToggle): a free CEP
+  panel. It changes the mute state of selected audio tracks with one
+  button, for A/B comparison of two audio chains.
 - More at [trevorohare.com/dev](https://www.trevorohare.com/dev).
 
 ## License
