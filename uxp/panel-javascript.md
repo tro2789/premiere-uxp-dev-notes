@@ -72,3 +72,11 @@ only the copy that UDT points to. Also, **when you close and open a
 panel, UXP does not load the plugin JS again**. The old code stays in
 memory until you reload the plugin or fully restart Premiere. If a change
 does not apply, first find which copy the active panel came from.
+
+## Plugin data is stored per Premiere major version
+
+Verified 2026-11-09 (upgrade from 26 to 27): UXP plugin data is in
+`%APPDATA%\Adobe\UXP\PluginsStorage\PPRO\<major version>\`. After the
+upgrade, the plugin started with no settings. Its data from version 26
+was not used. Plan a migration: on the first start, look for the folder
+of the previous major version and copy the settings.

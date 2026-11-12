@@ -72,3 +72,25 @@ into a subfolder of the watched directory:
   stability and lock release resolved in the same poll tick. Treat the
   open probe as a supplementary check, not as the sole completion
   signal.
+
+## Do not keep user data in `localStorage`
+
+Verified 2026-09-05: all saved settings of a CEP panel disappeared.
+CEP keeps `localStorage` in
+`%LOCALAPPDATA%\Temp\cep_cache\PPRO_<version>_<extension id>\`.
+
+- Windows Storage Sense deletes it as a temporary file.
+- The folder name includes the Premiere version. After an upgrade, the
+  panel starts with an empty store.
+- A hard reset can lose data that is not yet written to disk.
+
+Write a JSON file with `fs` under the `userData` system path instead:
+
+```js
+var base = window.__adobe_cep__.getSystemPath("userData");  // a file:/// URL
+var dir = decodeURIComponent(base.replace(/^file:\/{2,3}/, "")) + "/<extension id>";
+```
+
+`getSystemPath` returns a URL here too (see above). If you do not strip
+the scheme, `mkdir` fails with `ENOENT`. Use `localStorage` only for data
+that you can lose, such as a "last checked" time.

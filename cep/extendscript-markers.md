@@ -36,3 +36,21 @@ Test `end - start` against a small epsilon to tell point markers from
 duration markers. Do not treat a point marker as a region: in Spec
 Check, sampling a fixed window forward from a point marker read
 adjacent program audio instead of the quiet gap the user meant.
+
+## Move a marker
+
+Verified 2026-09-17 (26.5):
+
+```js
+m.start = 12.5;   // seconds, as a Number
+m.end = 14.0;
+```
+
+- If you assign a Time object, the call throws "Illegal Parameter type".
+- When you set `start`, `end` moves by the same delta. Set `start` first,
+  then `end`.
+- Sequence markers do not move when the user inserts material in the UI,
+  unless "Ripple Sequence Markers" is on. After an insert at the head of
+  the sequence, move all markers by the inserted duration in whole frames.
+- Scripted inserts move markers too. See
+  [Timeline edits from ExtendScript](timeline-editing.md#sequence-markers-move-once-for-each-insert).

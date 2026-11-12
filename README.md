@@ -8,7 +8,7 @@ Each entry comes from the development of a production plugin
 ([Scout](https://www.trevorohare.com/dev), an AI-assisted podcast editing panel, in
 development). Each entry has one of two sources:
 
-- A live test in Premiere Pro 26.2.x on Windows.
+- A live test in Premiere Pro 26.2 to 27.0 on Windows.
 - A specified Adobe document or Adobe sample.
 
 No entry is a guess. If an entry is not verified, the entry says so. The
@@ -33,7 +33,8 @@ time.
   spelling, the loopback whitelist rejection, silent clipboard-permission
   failures
 - **[Panel JavaScript problems](uxp/panel-javascript.md)**: CommonJS
-  resolution, `await require()` for addons, CSS and DOM limits
+  resolution, `await require()` for addons, CSS and DOM limits, and
+  plugin data that is stored per Premiere major version
 - **[Sequences, time, and duration](uxp/sequences-and-time.md)**: why
   `getEndTime()` is the duration and why the documented formula is
   incorrect
@@ -48,17 +49,31 @@ time.
 ### CEP (the old API, still necessary)
 
 - **[CEP manifest problems](cep/manifest-gotchas.md)**: silent rejections
-  of version ranges, lifecycle events, and panel geometry
+  of version ranges, lifecycle events, panel geometry, and broken
+  development installs through junctions
 - **[CEP panel Node.js access](cep/panel-node.md)**: `cep_node.require`,
   the `file:///` URL that `getSystemPath` returns, double-firing failed
-  spawns, and watch-folder completion detection for AME renders
+  spawns, watch-folder completion detection for AME renders, and why
+  `localStorage` loses user data
 - **[The QE DOM](cep/qe-dom.md)**: the undocumented API that is necessary
-  for razor operations, and its timecode format
+  for razor operations, its timecode format, effects, frame export, and
+  transitions
+- **[Timeline edits from ExtendScript](cep/timeline-editing.md)**:
+  one-track ripple, marker drift, `move()` removing transitions,
+  source-relative keyframe times, and scale to frame size
+- **[ExtendScript scope, open projects, and missing APIs](cep/extendscript-state.md)**:
+  persistent globals, several open projects, timeline color labels, a
+  paste recipe, and graphics text
+- **[Import FCP 7 XML](cep/fcp-xml-import.md)**: frame-exact import,
+  stereo to mono, mixed frame rates, and reused master clips
+- **[Project Manager](cep/project-manager.md)**: run it headless with
+  options that are safe for a handoff
 - **[Render a sequence with app.encoder](cep/encoder.md)**: the working
   `encodeSequence` call order, `workAreaType` values, `.epr` preset
   discovery, and completion detection
 - **[Sequence markers in ExtendScript](cep/extendscript-markers.md)**:
-  linked-list iteration, Time objects, and the point-marker trap
+  linked-list iteration, Time objects, the point-marker trap, and how to
+  move a marker
 - **[Track mute](cep/track-mute.md)**: `isMuted()` and `setMute()` on
   `audioTracks`, verified behavior, and the A/B toggle pattern
 
@@ -73,9 +88,9 @@ time.
 
 ## Conventions
 
-- "Verified" means: observed in a live test in Premiere Pro 26.2.x
+- "Verified" means: observed in a live test in Premiere Pro 26.2 to 27.0
   (Windows 11) on real projects, or quoted from a specified Adobe document
-  or sample.
+  or sample. Each entry gives the version that it was tested in.
 - "NEEDS-VERIFY" means: a possible interpretation of the documentation
   that is not tested. Treat it as a hypothesis.
 - Sample-verified patterns refer to

@@ -61,3 +61,18 @@ Community reports show the other failure mode on AME 24 and 25.5: the
 extension never appears in the menu at all. Either way, do not declare
 AME. If you need QC or automation on AME renders, run the panel in
 Premiere and watch AME's output folder from there.
+
+## Install development copies as real folders, not junctions
+
+Verified 2026-10-22 (CEP 12, Premiere 26.5.2): a development install was
+a directory junction from the extensions folder to a source repository.
+The panel drew only a box in the top-left corner. The rest stayed black.
+When dragged, the panel left trails. In DevTools,
+`innerWidth`/`innerHeight` were the manifest size (420x720), but
+`outerWidth`/`outerHeight` were 210x360. A correct panel has inner equal
+to outer. Closing, opening, and undocking the panel did not help.
+
+A real copy of the folder and a restart of Premiere fixed it. The test
+did not isolate whether the junction or the first open caused it.
+Install development copies with a copy script. To check the panel size,
+use the `.debug` port and compare the inner and outer sizes.

@@ -70,3 +70,73 @@ Treat each QE call as a risk with a planned exit. Isolate the calls in the
 smallest possible component (a helper extension with one function). Keep
 the interface small. Be prepared to delete the component when Adobe
 supplies a native UXP equivalent, or when Adobe removes QE.
+
+## Address a sequence without a timeline tab
+
+Verified 2026-09-15 (26.5.0) on a batch of 40 sequences:
+
+```js
+app.project.activeSequence = seq;            // in ExtendScript
+var qeSeq = qe.project.getActiveSequence();  // now addresses seq
+```
+
+This does not open a timeline tab. `qe.project.getSequenceAt(i)` throws.
+
+## Effects
+
+```js
+var fx = qe.project.getVideoEffectByName("Lumetri Color");
+qeClip.addVideoEffect(fx);
+qeClip.getComponentAt(k).remove();   // returns true
+```
+
+- `addVideoFX` does not exist. Use `addVideoEffect`.
+- A new effect is inserted at index 2, after Opacity and Motion. It is
+  not added at the end. To get a final order, add the effects in reverse
+  order.
+- To remove an effect, use the QE component `remove()`. The DOM
+  `clip.components[k].remove()` does not exist.
+- After a remove, QE and DOM component reads are stale for the rest of
+  the same script. Read again in a new call.
+- To match a QE item to a DOM clip, use `item.type === "Clip"` and
+  `Math.abs(item.start.secs - clip.start.seconds) < 0.02`.
+- In Lumetri Color, the Basic Correction values (Exposure, Contrast,
+  Highlights, Shadows, Whites, Blacks) are the FIRST property with each
+  display name. The same names occur again later for other sections.
+
+Do the structure changes (add, remove) in one call, the values in a
+second call, and the check in a third call.
+
+### Premiere 27: check the effect handle
+
+Verified 2026-11-10 (27.0): the Crop effect is now "Crop (Legacy)".
+`getVideoEffectByName("Crop")` returns an object with an empty `name`.
+`addVideoEffect` with that object returns `false`, with no error. Check
+`fx.name` before you use an effect handle.
+
+## Export a frame
+
+```js
+qe.project.getActiveSequence().exportFramePNG("00:00:12:00", "D:\\frames\\shot01");
+```
+
+Verified 2026-09-22 (26.5):
+
+- The time must be a timecode string in sequence frames. A ticks value or
+  a number throws "Illegal Parameter type".
+- The path must be a Windows path with backslashes and no extension. QE
+  adds `.png`. Forward slashes or a `.png` suffix throw "Unknown error
+  exception".
+- The sequence must be the active sequence.
+
+## Add a transition
+
+Verified 2026-10-04:
+
+```js
+var t = qe.project.getVideoTransitionByName("Blur Dissolve");
+qeClip.addTransition(t, true, "00:00:00:10", "00:00:00:00", 0, true, true);
+```
+
+Alignment `0` puts the transition on the head of the clip. `0.5` put it
+on the tail of the previous clip.
